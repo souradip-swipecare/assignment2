@@ -94,15 +94,14 @@
 
 
 "use client";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { ChevronDown, Download, X } from "lucide-react";
-import Image from "next/image";
+import {  Download } from "lucide-react";
 import Link from "next/link";
 import { ProjectProvider, useProjects } from "@/context/project-context";
 import { useParams } from "next/navigation";
 import LoadingSpinner from "@/app/components/loading-spinner";
 import ProjectMap from "@/app/components/project-map";
+import Image from "next/image";
 
 type Project = {
   name: string;
@@ -129,7 +128,7 @@ type Project = {
 };
 function CityContent() {
   const [hotspots, setHotspots] = useState<Project[]>([]);
-  const { projects, selectedProject, setSelectedProject, loading, isMockData, fetchProjects } = useProjects();
+  const { projects, loading, fetchProjects } = useProjects();
 
   const params = useParams();
   const cityName = typeof params.cityName === "string" ? params.cityName : "";
@@ -168,8 +167,8 @@ function CityContent() {
                       {/* Image */}
                       <div className="relative md:col-span-1">
                         <Link href={project.url || "#"}>
-                          <img
-                            src={project.image}
+                          <Image
+                            src={project.image ? project.image:'/placeholder.jpg'}
                             alt="Base64 SVG"
                             width={600}
                             height={400}
@@ -258,19 +257,18 @@ function CityContent() {
 }
 
 export default function PropertyListing() {
-  const [isLoading, setIsLoading] = useState(true)
   const params = useParams()
   const cityName = typeof params.cityName === "string" ? params.cityName : ""
   const formattedCityName = cityName.charAt(0).toUpperCase() + cityName.slice(1)
 
-  useEffect(() => {
-    // Simulate initial loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 1500)
+  // useEffect(() => {
+  //   // Simulate initial loading time
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false)
+  //   }, 1500)
 
-    return () => clearTimeout(timer)
-  }, [])
+  //   return () => clearTimeout(timer)
+  // }, [])
 
   // if (loading) {
   //   return (

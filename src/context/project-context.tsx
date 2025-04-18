@@ -6,10 +6,9 @@ import type { Project } from "@/types/project"
 interface ProjectContextType {
   projects: Project[]
   loading: boolean
-  isMockData: boolean
-  selectedProject: Project | null
+  // selectedProject: Project | null
   fetchProjects: () => Promise<void>
-  setSelectedProject: (project: Project | null) => void
+  // setSelectedProject: (project: Project | null) => void
 }
 
 const ProjectContext = createContext<ProjectContextType | undefined>(undefined)
@@ -23,8 +22,7 @@ export function ProjectProvider({
 }) {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
-  const [isMockData, setIsMockData] = useState(false)
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  // const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   const fetchProjects = useCallback(async () => {
     setLoading(true)
@@ -36,15 +34,10 @@ export function ProjectProvider({
 
       if (data) {
         setProjects(data)
-
-        // Determine if we're using mock data
-        // In a real implementation, the API would return this information
-        // For now, we'll assume it's mock data since we know real scraping is blocked
-        setIsMockData(false)
       }
     } catch (error) {
       console.error("Error fetching projects:", error)
-      setIsMockData(true)
+      
     } finally {
       setLoading(false)
     }
@@ -55,10 +48,9 @@ export function ProjectProvider({
       value={{
         projects,
         loading,
-        isMockData,
-        selectedProject,
+        // selectedProject,
         fetchProjects,
-        setSelectedProject,
+        // setSelectedProject,
       }}
     >
       {children}

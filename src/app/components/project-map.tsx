@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
+import { Icon } from 'leaflet';
 
 const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false })
 const TileLayer = dynamic(() => import("react-leaflet").then((mod) => mod.TileLayer), { ssr: false })
 const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), { ssr: false })
-const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { ssr: false })
+// const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { ssr: false })
 
 interface ProjectMapProps {
   lat: number
@@ -16,7 +17,7 @@ interface ProjectMapProps {
 export default function ProjectMap({ lat, lng }: ProjectMapProps) {
   const [mapCenter, setMapCenter] = useState<[number, number]>([lat, lng])
   const [isClient, setIsClient] = useState(false)
-  const [markerIcon, setMarkerIcon] = useState<any>(null)
+  const [markerIcon, setMarkerIcon] = useState<Icon | null>(null);
 
   useEffect(() => {
     setIsClient(true)

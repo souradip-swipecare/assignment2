@@ -113,8 +113,12 @@ export async function GET(req: NextRequest) {
         // console.log("Total Valid Projects Parsed:", projects);
         return NextResponse.json(projects, { status: 200 });
 
-    } catch (error: any) {
-        console.error("Scraping Error:", error.message);
-        return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error("❌ Scraping Error:", error.message);
+            return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
+        }
+        console.error("❌ Unknown Error:", error);
+        return NextResponse.json({ error: 'An unknown error occurred' }, { status: 500 });
     }
 }
